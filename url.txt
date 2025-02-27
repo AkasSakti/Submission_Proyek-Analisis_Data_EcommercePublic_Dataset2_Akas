@@ -1,0 +1,5 @@
+untuk menjalankan dashboard di streamlit, langkahnya:
+1. buka https://khaki-mirrors-enter.loca.lt/
+2. masukkan IP: 34.125.60.112 sebagai password
+3. memanfaatkan cloudflared sehingga didapati url yang tetap bisa diakses jika google colab dimatikan melalui alamat berikut https://khaki-mirrors-enter.loca.lt/
+4. local: http://localhost:8506/
