@@ -101,5 +101,12 @@ plt.ylabel("Jumlah Seller")
 plt.title("Top 10 Kota dengan Seller Terbanyak")
 st.pyplot(fig)
 
+# Visualisasi Heatmap Konsentrasi Seller
+st.write("### Heatmap Konsentrasi Seller")
+heatmap_data = df.groupby(['seller_state', 'seller_city']).size().reset_index(name='seller_count')
+fig = px.density_heatmap(heatmap_data, x='seller_state', y='seller_city', z='seller_count',
+                         color_continuous_scale='viridis', title="Heatmap Konsentrasi Seller")
+st.plotly_chart(fig)
 
 st.markdown("Dashboard ini membantu dalam memahami **distribusi seller** berdasarkan lokasi dan membantu dalam strategi ekspansi bisnis.")
+st.markdown("Dashboard heatmap Konsentrasi Seller, dengan visualisasi ini kita bisa melihat hubungan antara kota atau negara bagian dalam hal jumlah seller, untuk melihat hubungan positif kuat yang terbentuk")
