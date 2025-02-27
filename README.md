@@ -9,7 +9,7 @@
    4. matplotlib
    5. plotly
    6. streamlit
-   7. cloudflared
+   7. cloudflared (khusus dev di google colab)
 ## Setup Environtment:
     conda create --name main-ds python=3.9
     conda activate main-ds
@@ -21,9 +21,8 @@
     pip install -r requirements.txt
 ## Instalasi
    1. pip install streamlit cloudflared pandas seaborn matplotlib plotly numpy
-## Running di Jupyter Notebook
-   1. Jalankan semua kode dengan klik menu Runtime>jalankan semua
 ## Running di CMD
    1. change directory ke folder project
    2. ketikkan streamlit run dashboard.py
-   
+## Running di Github X  streamlit cloud
+   1. url: https://hy7lfrvqtnyvqmygfmazpu.streamlit.app/     
