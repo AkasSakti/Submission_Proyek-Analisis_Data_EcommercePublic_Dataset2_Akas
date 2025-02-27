@@ -25,4 +25,4 @@
    1. change directory ke folder project
    2. ketikkan streamlit run dashboard.py
 ## Running di Github X  streamlit cloud
-   1. url: https://9luqqbqdfgfrlu8rbqrhpn.streamlit.app/     
+   1. url: (https://wv4vwqyxq5mtud3uqfjf65.streamlit.app/)     
