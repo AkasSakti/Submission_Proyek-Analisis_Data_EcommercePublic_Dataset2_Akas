@@ -5,4 +5,5 @@ untuk menjalankan dashboard di streamlit dengan development di google colab, lan
 Untuk menjalankan dilokal
 1. buka CMD pindah ke direktori projek
 2. ketikan streamlit run dashboard.py
-Untuk menjalankan dengan streamlit-cloud dengan Github buka url: https://wv4vwqyxq5mtud3uqfjf65.streamlit.app/ 
+Untuk menjalankan dengan streamlit-cloud dengan Github buka url: https://qvuvsaeldfboc28kb2ds87.streamlit.app/
+
