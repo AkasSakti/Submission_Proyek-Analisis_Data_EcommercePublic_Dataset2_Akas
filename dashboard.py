@@ -6,7 +6,7 @@ import plotly.express as px
 import streamlit as st
 
 
-file_path = "../Data/sellers_dataset.csv"
+file_path = "Data/sellers_dataset.csv"
 
 # Load dataset
 df = pd.read_csv(file_path)
