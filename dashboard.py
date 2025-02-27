@@ -21,10 +21,14 @@ df.drop_duplicates(inplace=True)
 # Mengisi missing values jika diperlukan
 df.fillna(method='ffill', inplace=True)
 
-
 # Hitung jumlah seller per kota
 city_counts = df['seller_city'].value_counts().reset_index()
 city_counts.columns = ['seller_city', 'seller_count']
+
+# Hitung jumlah seller per negara bagian
+state_counts = df['seller_state'].value_counts().reset_index()
+state_counts.columns = ['seller_state', 'seller_count']
+
 
 # Tentukan kuantil untuk binning
 low_threshold = city_counts['seller_count'].quantile(0.25)  # 25% terbawah
@@ -45,14 +49,22 @@ city_counts['seller_category'] = city_counts['seller_count'].apply(categorize_ci
 st.title("Dashboard Analisis Seller Marketplace")
 st.markdown("Visualisasi Data Seller Berdasarkan Kota dan Kategori Clustering")
 
+
 # Pilihan filter kategori seller
 selected_category = st.selectbox("Pilih Kategori Seller", ["All"] + list(city_counts['seller_category'].unique()))
 
+# Pilihan filter negara bagian
+selected_state = st.selectbox("Pilih Negara Bagian", ["All"] + list(state_counts['seller_state'].unique()))
+
 # Filter data berdasarkan kategori
+filtered_data = city_counts.copy()
 if selected_category != "All":
-    filtered_data = city_counts[city_counts['seller_category'] == selected_category]
-else:
-    filtered_data = city_counts
+    filtered_data = filtered_data[filtered_data['seller_category'] == selected_category]
+
+# Filter data berdasarkan negara bagian
+if selected_state != "All":
+    filtered_data = filtered_data[filtered_data['seller_city'].isin(df[df['seller_state'] == selected_state]['seller_city'])]
+
 
 # Tampilkan DataFrame
 st.write("### Data Seller per Kota")
@@ -61,15 +73,26 @@ st.dataframe(filtered_data)
 # Visualisasi Distribusi Kategori
 st.write("### Distribusi Kategori Seller per Kota")
 fig, ax = plt.subplots(figsize=(8, 4))
-sns.countplot(x=city_counts['seller_category'], palette='coolwarm', ax=ax)
+sns.countplot(x=filtered_data['seller_category'], palette='coolwarm', ax=ax)
 plt.xlabel("Kategori Kota")
 plt.ylabel("Jumlah Kota")
 plt.title("Distribusi Kota Berdasarkan Jumlah Seller")
 st.pyplot(fig)
 
+# Visualisasi Distribusi Seller per Negara Bagian
+st.write("### Distribusi Seller per Negara Bagian (Hasil Filter)")
+filtered_state_counts = state_counts[state_counts['seller_state'] == selected_state] if selected_state != "All" else state_counts
+fig, ax = plt.subplots(figsize=(10, 5))
+sns.barplot(x=filtered_state_counts['seller_state'], y=filtered_state_counts['seller_count'], palette="magma", ax=ax)
+plt.xticks(rotation=45)
+plt.xlabel("Negara Bagian")
+plt.ylabel("Jumlah Seller")
+plt.title("Distribusi Seller Berdasarkan Negara Bagian")
+st.pyplot(fig)
+
 # Bar Chart Top 10 Kota dengan Seller Terbanyak
-st.write("### Top 10 Kota dengan Seller Terbanyak")
-top_10_cities = city_counts.nlargest(10, 'seller_count')
+st.write("### Top 10 Kota dengan Seller Terbanyak (Hasil Filter)")
+top_10_cities = filtered_data.nlargest(10, 'seller_count')
 fig, ax = plt.subplots(figsize=(10, 5))
 sns.barplot(x=top_10_cities['seller_city'], y=top_10_cities['seller_count'], palette="viridis", ax=ax)
 plt.xticks(rotation=45)
@@ -77,5 +100,6 @@ plt.xlabel("Kota")
 plt.ylabel("Jumlah Seller")
 plt.title("Top 10 Kota dengan Seller Terbanyak")
 st.pyplot(fig)
+
 
 st.markdown("Dashboard ini membantu dalam memahami **distribusi seller** berdasarkan lokasi dan membantu dalam strategi ekspansi bisnis.")
